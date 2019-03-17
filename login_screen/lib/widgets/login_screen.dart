@@ -6,25 +6,55 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final formkey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Form(
+        key: formkey,
         child: Column(
           children: <Widget>[
             emailField(),
             passwordField(),
+            Padding(padding: EdgeInsets.all(10)),
+            submitButton(),
           ],
         ),
       ),
     );
   }
-}
 
-emailField() {
-  return Text('Email Field');
-}
+  emailField() {
+    return TextFormField(
+      decoration: InputDecoration(
+        labelText: 'Email',
+        hintText: 'you@example.com',
+        icon: Icon(Icons.email),
+      ),
+    );
+  }
 
-passwordField() {
-  return Text('Password Field');
+  passwordField() {
+    return TextFormField(
+      decoration: InputDecoration(
+        labelText: 'Password',
+        hintText: 'Strong password',
+        icon: Icon(Icons.security),
+      ),
+    );
+  }
+
+  submitButton() {
+    return FlatButton(
+      child: Text(
+        'Submit',
+        style: TextStyle(color: Colors.white),
+      ),
+      onPressed: () => {
+            formkey.currentState.reset(),
+          },
+      color: Colors.blue,
+    );
+  }
 }
