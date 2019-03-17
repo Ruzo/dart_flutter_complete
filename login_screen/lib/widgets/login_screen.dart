@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import '../mixins/input-validations.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> with input_validations {
   final formkey = GlobalKey<FormState>();
+  bool _validate = false;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(top: 20),
       child: Form(
         key: formkey,
         child: Column(
@@ -21,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
             submitButton(),
           ],
         ),
+        autovalidate: _validate,
       ),
     );
   }
@@ -32,6 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
         hintText: 'you@example.com',
         icon: Icon(Icons.email),
       ),
+      keyboardType: TextInputType.emailAddress,
+      validator: validateEmail,
     );
   }
 
@@ -42,6 +48,8 @@ class _LoginScreenState extends State<LoginScreen> {
         hintText: 'Strong password',
         icon: Icon(Icons.security),
       ),
+      obscureText: true,
+      validator: validatePassword,
     );
   }
 
@@ -52,7 +60,8 @@ class _LoginScreenState extends State<LoginScreen> {
         style: TextStyle(color: Colors.white),
       ),
       onPressed: () => {
-            formkey.currentState.reset(),
+            setState(() => _validate = true),
+            print(formkey.currentState.validate()),
           },
       color: Colors.blue,
     );
