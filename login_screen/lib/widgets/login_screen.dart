@@ -10,6 +10,9 @@ class _LoginScreenState extends State<LoginScreen> with input_validations {
   final formkey = GlobalKey<FormState>();
   bool _validate = false;
 
+  String email = '';
+  String password = '';
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,6 +41,7 @@ class _LoginScreenState extends State<LoginScreen> with input_validations {
       ),
       keyboardType: TextInputType.emailAddress,
       validator: validateEmail,
+      onSaved: (value) => email = value,
     );
   }
 
@@ -50,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen> with input_validations {
       ),
       obscureText: true,
       validator: validatePassword,
+      onSaved: (value) => password = value,
     );
   }
 
@@ -59,10 +64,15 @@ class _LoginScreenState extends State<LoginScreen> with input_validations {
         'Submit',
         style: TextStyle(color: Colors.white),
       ),
-      onPressed: () => {
-            setState(() => _validate = true),
-            print(formkey.currentState.validate()),
-          },
+      onPressed: () {
+        setState(() => _validate = true);
+        if (formkey.currentState.validate()) {
+          formkey.currentState.save();
+          print('Saved email as $email and password as $password.');
+        } else {
+          print('Not valid.');
+        }
+      },
       color: Colors.blue,
     );
   }
