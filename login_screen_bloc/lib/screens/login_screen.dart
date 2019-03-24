@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../blocs/bloc.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -7,10 +8,10 @@ class LoginScreen extends StatelessWidget {
       child: Column(
         children: <Widget>[
           emailField(),
-          Padding(
-            padding: EdgeInsets.all(10),
-          ),
+          Padding(padding: EdgeInsets.all(10)),
           passwordField(),
+          Padding(padding: EdgeInsets.all(10)),
+          submitButton(),
         ],
       ),
     );
@@ -18,21 +19,44 @@ class LoginScreen extends StatelessWidget {
 }
 
 Widget emailField() {
-  return TextField(
-    decoration: InputDecoration(
-      labelText: 'Email',
-      hintText: 'you@example',
-      enabledBorder: OutlineInputBorder(),
-    ),
-  );
+  return StreamBuilder<String>(
+      stream: bloc.emailStream,
+      builder: (context, snapshot) {
+        return TextField(
+          decoration: InputDecoration(
+            labelText: 'Email',
+            hintText: 'you@example',
+            errorText: snapshot.error,
+            enabledBorder: OutlineInputBorder(),
+            focusedBorder: OutlineInputBorder(),
+          ),
+          onChanged: bloc.addToEmail,
+        );
+      });
 }
 
 Widget passwordField() {
-  return TextField(
-    decoration: InputDecoration(
-      labelText: 'Password',
-      hintText: 'Not 123456, abcdef or password',
-      enabledBorder: OutlineInputBorder(),
-    ),
+  return StreamBuilder<String>(
+      stream: bloc.passwordStream,
+      builder: (context, snapshot) {
+        return TextField(
+          decoration: InputDecoration(
+            labelText: 'Password',
+            hintText: 'Say no to 123456, abcdef, password, etc...',
+            errorText: snapshot.error,
+            enabledBorder: OutlineInputBorder(),
+            focusedBorder: OutlineInputBorder(),
+          ),
+          onChanged: bloc.addToPassword,
+        );
+      });
+}
+
+Widget submitButton() {
+  return FlatButton(
+    child: Text('Submit'),
+    color: Colors.blue,
+    textColor: Colors.white,
+    onPressed: () => {},
   );
 }
