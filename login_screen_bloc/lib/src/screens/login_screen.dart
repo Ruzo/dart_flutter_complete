@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-// import '../blocs/bloc.dart';
+import '../blocs/bloc.dart';
 import '../blocs/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final bloc = Provider.of(context);
+    Bloc bloc = Provider.of(context);
     return Container(
       child: Column(
         children: <Widget>[
@@ -13,14 +13,14 @@ class LoginScreen extends StatelessWidget {
           Padding(padding: EdgeInsets.all(10)),
           passwordField(bloc),
           Padding(padding: EdgeInsets.all(10)),
-          submitButton(),
+          submitButton(bloc),
         ],
       ),
     );
   }
 }
 
-Widget emailField(bloc) {
+Widget emailField(Bloc bloc) {
   return StreamBuilder<String>(
       stream: bloc.emailStream,
       builder: (context, snapshot) {
@@ -37,7 +37,7 @@ Widget emailField(bloc) {
       });
 }
 
-Widget passwordField(bloc) {
+Widget passwordField(Bloc bloc) {
   return StreamBuilder<String>(
       stream: bloc.passwordStream,
       builder: (context, snapshot) {
@@ -54,11 +54,16 @@ Widget passwordField(bloc) {
       });
 }
 
-Widget submitButton() {
-  return FlatButton(
-    child: Text('Submit'),
-    color: Colors.blue,
-    textColor: Colors.white,
-    onPressed: () => {},
-  );
+Widget submitButton(Bloc bloc) {
+  return StreamBuilder<Map>(
+      stream: bloc.validated,
+      builder: (context, snapshot) {
+        return FlatButton(
+          child: Text('Submit'),
+          color: Colors.blue,
+          textColor: Colors.white,
+          onPressed:
+              snapshot.hasData ? () => bloc.handleSubmit(snapshot.data) : null,
+        );
+      });
 }
