@@ -1,23 +1,13 @@
 import 'package:flutter/material.dart';
-import 'widgets/cat.dart';
+import 'screens/home.dart';
 
-class App extends StatefulWidget {
-  _AppState createState() => _AppState();
-}
-
-class _AppState extends State<App> {
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Animation',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Pussycat in a box'),
-        ),
-        body: Center(
-          child: Cat(),
-        ),
-      ),
+      theme: ThemeData(primarySwatch: Colors.deepOrange),
+      home: Home(),
     );
   }
 }
