@@ -8,18 +8,19 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   Animation<double> catAnimation;
   AnimationController catController;
+  Color boxColor = Color(0xFFCB922E);
 
   @override
   void initState() {
     super.initState();
     catController = AnimationController(
-      duration: Duration(seconds: 2),
+      duration: Duration(milliseconds: 200),
       vsync: this,
     );
 
     catAnimation = Tween(
-      begin: 0.0,
-      end: 100.0,
+      begin: -35.0,
+      end: -82.0,
     ).animate(
       CurvedAnimation(
         parent: catController,
@@ -41,21 +42,86 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         title: Text('Pussycat in a box'),
       ),
       body: GestureDetector(
-        child: buildAnimation(),
+        child: stackedWidgets(),
         onTap: handleTap,
       ),
     );
   }
 
-  Widget buildAnimation() {
+  Widget boxBody() {
+    return Container(
+      width: 200.0,
+      height: 200.0,
+      color: boxColor,
+    );
+  }
+
+  Widget boxFlapLeft() {
+    return Positioned(
+      left: -8,
+      top: 0,
+      child: Transform.rotate(
+        angle: 0.2,
+        alignment: Alignment.topRight,
+        child: Container(
+          width: 10,
+          height: 100,
+          color: boxColor,
+        ),
+      ),
+    );
+  }
+
+  Widget boxFlapRight() {
+    return Positioned(
+      left: 198,
+      top: 0,
+      child: Transform.rotate(
+        angle: 6.0,
+        alignment: Alignment.topLeft,
+        child: Container(
+          width: 10,
+          height: 100,
+          color: boxColor,
+        ),
+      ),
+    );
+  }
+
+  Widget box() {
+    return Stack(
+      overflow: Overflow.visible,
+      children: <Widget>[
+        boxBody(),
+        boxFlapLeft(),
+        boxFlapRight(),
+      ],
+    );
+  }
+
+  Widget buildCatAnimation() {
     return AnimatedBuilder(
         animation: catAnimation,
         child: Cat(),
         builder: (context, child) {
-          return Container(
-            margin: EdgeInsets.only(top: catAnimation.value),
+          return Positioned(
+            left: 0.0,
+            right: 0.0,
+            top: catAnimation.value,
             child: child,
           );
         });
+  }
+
+  Widget stackedWidgets() {
+    return Center(
+      child: Stack(
+        overflow: Overflow.visible,
+        children: <Widget>[
+          buildCatAnimation(),
+          box(),
+        ],
+      ),
+    );
   }
 }
