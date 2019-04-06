@@ -28,3 +28,5 @@ class ItemModel {
         title = parsedJSON['title'],
         descendants = parsedJSON['descendants'];
 }
+
+//TODO: Create fromDb and toDB constructors
