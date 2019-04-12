@@ -5,15 +5,15 @@ import '../models/item_model.dart';
 
 class ApiProvider implements DataSource {
   var client = Client();
-  final String root = 'https://hacker-news.firebaseio.com/v0';
+  final String _root = 'https://hacker-news.firebaseio.com/v0';
 
   Future<List<int>> getTopList() async {
-    final response = await client.get('/topstories.json');
+    final response = await client.get('$_root/topstories.json');
     return jsonDecode(response.body).cast<int>();
   }
 
   Future<ItemModel> getItem(int id) async {
-    final response = await client.get('/item/$id.json');
+    final response = await client.get('$_root/item/$id.json');
     return ItemModel.fromJSON(jsonDecode(response.body));
   }
 }
