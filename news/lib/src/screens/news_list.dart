@@ -6,7 +6,7 @@ class NewsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final StoriesBloc bloc = StoriesProvider.of(context);
-    bloc.getTopNews(true);
+    bloc.getTopNews(false);
     return Scaffold(
       appBar: AppBar(
         title: Text('Techy News'),
@@ -41,9 +41,7 @@ class NewsList extends StatelessWidget {
 }
 
 Future<ItemModel> itemDetails(StoriesBloc bloc, int id) async {
-  print('in itemDetails with id $id');
   final details = await bloc.getNewsItem(id);
-  print('Details: $details');
   return details;
 }
 

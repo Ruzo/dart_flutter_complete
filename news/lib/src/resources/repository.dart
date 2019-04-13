@@ -35,8 +35,11 @@ class Repository {
     ItemModel item;
     for (DataCache cache in caches) {
       item = await cache.getItem(id);
-      print('$id in cache');
-      if (item != null) return item;
+      if (item != null) {
+        print('$id in cache');
+        return item;
+      }
+      print('$id not in cache');
     }
 
     for (DataSource source in sources) {
@@ -48,6 +51,7 @@ class Repository {
         }
         return item;
       }
+      print('$id null from source');
     }
 
     return null;
