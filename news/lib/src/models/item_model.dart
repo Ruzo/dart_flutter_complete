@@ -17,18 +17,18 @@ class ItemModel {
 
   ItemModel.fromJSON(Map<String, dynamic> parsedJSON)
       : id = parsedJSON['id'],
-        deleted = parsedJSON['deleted'],
-        type = parsedJSON['type'],
-        by = parsedJSON['by'],
-        time = parsedJSON['time'],
-        text = parsedJSON['text'],
-        dead = parsedJSON['dead'],
-        parent = parsedJSON['parent'],
-        kids = parsedJSON['kids'],
-        url = parsedJSON['url'],
-        score = parsedJSON['score'],
-        title = parsedJSON['title'],
-        descendants = parsedJSON['descendants'];
+        deleted = parsedJSON['deleted'] ??= false,
+        type = parsedJSON['type'] ??= '',
+        by = parsedJSON['by'] ??= '',
+        time = parsedJSON['time'] ??= 0,
+        text = parsedJSON['text'] ??= '',
+        dead = parsedJSON['dead'] ??= false,
+        parent = parsedJSON['parent'] ??= 0,
+        kids = parsedJSON['kids'] ??= [],
+        url = parsedJSON['url'] ??= '',
+        score = parsedJSON['score'] ??= 0,
+        title = parsedJSON['title'] ??= '',
+        descendants = parsedJSON['descendants'] ??= 0;
 
   ItemModel.fromMap(Map<String, dynamic> map)
       : id = map['id'],

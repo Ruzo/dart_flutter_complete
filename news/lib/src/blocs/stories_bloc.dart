@@ -15,7 +15,9 @@ class StoriesBloc {
   }
 
   Future<ItemModel> getNewsItem(int id) async {
-    return await _repository.fetchItem(id);
+    final item = await _repository.fetchItem(id);
+    print('Got item');
+    return item;
   }
 
   void dispose() {

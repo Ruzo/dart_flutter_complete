@@ -22,11 +22,34 @@ class NewsList extends StatelessWidget {
           return ListView.builder(
             itemCount: snapshot.data.length,
             itemBuilder: (context, int index) {
-              return Text('${snapshot.data[index]}');
+              return FutureBuilder<ItemModel>(
+                key: Key(snapshot.data[index].toString()),
+                future: itemDetails(bloc, snapshot.data[index]),
+                builder: (BuildContext context,
+                    AsyncSnapshot<ItemModel> itemSnapshot) {
+                  return itemSnapshot.hasData
+                      ? buildItem(itemSnapshot.data, index)
+                      : Text('Loading...');
+                },
+              );
             },
           );
         },
       ),
     );
   }
+}
+
+Future<ItemModel> itemDetails(StoriesBloc bloc, int id) async {
+  print('in itemDetails with id $id');
+  final details = await bloc.getNewsItem(id);
+  print('Details: $details');
+  return details;
+}
+
+Widget buildItem(ItemModel item, int index) {
+  return Container(
+    padding: EdgeInsets.all(10),
+    child: Text('$index. ${item.title}'),
+  );
 }
