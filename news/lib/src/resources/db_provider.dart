@@ -47,7 +47,7 @@ class DbProvider implements DataCache {
             ids blob
           )
           ''');
-        await newDb.insert('top_ids', {'id': 0, 'ids': []});
+        await newDb.insert('top_ids', {'id': 0, 'ids': jsonEncode([])});
         print('Created Database');
       },
     );
@@ -78,7 +78,7 @@ class DbProvider implements DataCache {
     final map = maps.first;
     print('top list map: $map');
     List<int> ids = jsonDecode(map['ids']).cast<int>();
-    return ids;
+    return ids.length > 0 ? ids : null;
   }
 
   Future<int> updateTopList(List<int> ids) async {
