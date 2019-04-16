@@ -25,10 +25,9 @@ class TopListItem extends StatelessWidget {
   Widget buildItem(ItemModel item, int index) {
     return ListTile(
       leading: CircleAvatar(
-        child: Text('${index + 1}'),
-        radius: 14.0,
+        child: Text('${index + 1}', style: TextStyle(fontSize: 14)),
+        radius: 16,
       ),
-      dense: true,
       title: Text(item.title),
       subtitle: Text('${item.score}'),
       trailing: Column(

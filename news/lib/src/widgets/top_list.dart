@@ -5,7 +5,7 @@ import 'top_list_item.dart';
 class TopList extends StatelessWidget {
   Widget build(BuildContext context) {
     final StoriesBloc bloc = StoriesProvider.of(context);
-    bloc.getTopNews(false);
+    bloc.getTopNews(true);
     return StreamBuilder(
       stream: bloc.topList,
       builder: (BuildContext context, AsyncSnapshot<List<int>> snapshot) {
@@ -14,7 +14,8 @@ class TopList extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         }
-        return ListView.builder(
+        return ListView.separated(
+            separatorBuilder: (BuildContext context, int index) => Divider(),
             itemCount: snapshot.data.length,
             itemBuilder: (context, int index) {
               return TopListItem(snapshot, index);

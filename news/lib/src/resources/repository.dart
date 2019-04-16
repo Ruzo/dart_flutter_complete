@@ -21,7 +21,7 @@ class Repository {
       list = await source.getTopList();
       if (list != null) {
         for (DataCache cache in caches) {
-          cache.updateTopList(list);
+          await cache.updateTopList(list);
         }
         return list;
       }
@@ -46,7 +46,7 @@ class Repository {
       item = await source.getItem(id);
       if (item != null) {
         for (DataCache cache in caches) {
-          cache.insertItem(item);
+          await cache.insertItem(item);
           print('Cached item $id');
         }
         return item;

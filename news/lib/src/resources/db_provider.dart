@@ -69,7 +69,7 @@ class DbProvider implements DataCache {
 
   Future<int> insertItem(ItemModel item) async {
     var db = await openedDb;
-    return db.insert('items', item.toMap());
+    return await db.insert('items', item.toMap());
   }
 
   Future<List<int>> getTopList() async {
@@ -83,8 +83,7 @@ class DbProvider implements DataCache {
 
   Future<int> updateTopList(List<int> ids) async {
     var db = await openedDb;
-    print('db.isOpen is ${db?.isOpen}');
-    return db.update('top_ids', {'ids': jsonEncode(ids)},
+    return await db.update('top_ids', {'ids': jsonEncode(ids)},
         where: 'id = ?', whereArgs: [0]);
   }
 }
