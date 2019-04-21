@@ -9,6 +9,11 @@ import '../models/item_model.dart';
 
 class DbProvider implements DataCache {
   static Database _db;
+  // final Database db;
+
+  static final DbProvider _instance = DbProvider.internal();
+  factory DbProvider() => _instance;
+  DbProvider.internal();
 
   Future<Database> get openedDb async {
     if ((_db != null) || (_db?.isOpen == true)) return _db;
@@ -16,7 +21,7 @@ class DbProvider implements DataCache {
     return _db;
   }
 
-  Future<Database> init() async {
+  init() async {
     var dbsPath = await getDatabasesPath();
     String path = join(dbsPath, 'news.db');
 
@@ -48,7 +53,7 @@ class DbProvider implements DataCache {
           )
           ''');
         await newDb.insert('top_ids', {'id': 0, 'ids': jsonEncode([])});
-        print('Created Database');
+        // print('Created Database');
       },
     );
     return dbInit;
@@ -63,7 +68,7 @@ class DbProvider implements DataCache {
       print('$id found in DB');
       return ItemModel.fromMap(maps.first);
     }
-    print('$id not found in DB');
+    // print('$id not found in DB');
     return null;
   }
 
@@ -76,7 +81,7 @@ class DbProvider implements DataCache {
     var db = await openedDb;
     List<Map> maps = await db.query('top_ids', where: 'id = ?', whereArgs: [0]);
     final map = maps.first;
-    print('top list map: $map');
+    print('top list from db');
     List<int> ids = jsonDecode(map['ids']).cast<int>();
     return ids.length > 0 ? ids : null;
   }
