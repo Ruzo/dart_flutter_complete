@@ -60,12 +60,12 @@ class DbProvider implements DataCache {
   }
 
   Future<ItemModel> getItem(int id) async {
-    print('in DBProvider with id $id');
+    // print('in DBProvider with id $id');
     var db = await openedDb;
     List<Map> maps = await db
         .query('items', columns: null, where: 'id = ?', whereArgs: [id]);
     if (maps.length > 0) {
-      print('$id found in DB');
+      // print('$id found in DB');
       return ItemModel.fromMap(maps.first);
     }
     // print('$id not found in DB');
@@ -81,7 +81,7 @@ class DbProvider implements DataCache {
     var db = await openedDb;
     List<Map> maps = await db.query('top_ids', where: 'id = ?', whereArgs: [0]);
     final map = maps.first;
-    print('top list from db');
+    // print('top list from db');
     List<int> ids = jsonDecode(map['ids']).cast<int>();
     return ids.length > 0 ? ids : null;
   }

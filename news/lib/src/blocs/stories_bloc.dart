@@ -1,26 +1,27 @@
 import 'package:rxdart/rxdart.dart';
-import 'dart:collection';
+// import 'dart:collection';
 import '../resources/repository.dart';
 import '../models/item_model.dart';
 
 class StoriesBloc {
+  final Repository _repository = Repository();
+  List<int> _ids;
+
+  final PublishSubject<List<int>> _topList = PublishSubject<List<int>>();
+
   StoriesBloc() {
     getTopNews();
   }
 
-  final Repository _repository = Repository();
+  Observable<List<int>> get topList => _topList.stream;
 
-  final PublishSubject<UnmodifiableListView<ItemModel>> _itemsList =
-      PublishSubject<UnmodifiableListView<ItemModel>>();
-
-  Observable<UnmodifiableListView<ItemModel>> get itemsList =>
-      _itemsList.stream;
+  Future<ItemModel> fetchItem(int row) async {
+    return await getNewsItem(_ids[row]);
+  }
 
   void getTopNews() async {
-    final List<int> ids = await _repository.fetchTopNews();
-    Future<List<ItemModel>> newsItems =
-        Future.wait(ids.map((id) => getNewsItem(id)).toList());
-    _itemsList.add(UnmodifiableListView(await newsItems));
+    _ids = await _repository.fetchTopNews();
+    _topList.add(_ids);
   }
 
   Future<ItemModel> getNewsItem(int id) async {
@@ -30,10 +31,10 @@ class StoriesBloc {
   }
 
   resfreshTopList() async {
-    return await _repository.refreshTopList();
+    return getTopNews();
   }
 
   void dispose() {
-    _itemsList.close();
+    _topList.close();
   }
 }

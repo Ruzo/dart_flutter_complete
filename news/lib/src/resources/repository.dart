@@ -14,14 +14,14 @@ class Repository {
     if (!refresh) {
       for (DataCache cache in caches) {
         list = await cache.getTopList();
-        print('TopList from DB');
+        // print('TopList from DB');
         if (list != null) return list;
       }
     }
 
     for (DataSource source in sources) {
       list = await source.getTopList();
-      print('refreshing TopList...');
+      // print('refreshing TopList...');
       if (list != null) {
         for (DataCache cache in caches) {
           await cache.updateTopList(list);
@@ -35,7 +35,7 @@ class Repository {
   }
 
   Future<ItemModel> fetchItem(int id) async {
-    // print('in Repository with id $id');
+    print('in Repository with id $id');
     ItemModel item;
     for (DataCache cache in caches) {
       item = await cache.getItem(id);
@@ -61,8 +61,7 @@ class Repository {
     return null;
   }
 
-  refreshTopList() async {
+  refreshTopList() {
     refresh = true;
-    return await fetchTopNews();
   }
 }
