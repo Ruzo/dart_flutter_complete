@@ -30,6 +30,21 @@ class ItemModel {
         title = parsedJSON['title'] ?? '',
         descendants = parsedJSON['descendants'] ?? 0;
 
+  ItemModel.placeHolder(int id)
+      : id = id,
+        deleted = false,
+        type = 'placeholder',
+        by = 'the_app',
+        time = 0,
+        text = 'Loading article, please wait...',
+        dead = false,
+        parent = 0,
+        kids = [],
+        url = 'https://news.ycombinator.com/',
+        score = 0,
+        title = 'Loading article...',
+        descendants = 1;
+
   ItemModel.fromMap(Map<String, dynamic> map)
       : id = map['id'],
         deleted = map['deleted'] == 1 ? true : false,

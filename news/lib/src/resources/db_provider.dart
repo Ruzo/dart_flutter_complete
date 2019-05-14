@@ -74,7 +74,11 @@ class DbProvider implements DataCache {
 
   Future<int> insertItem(ItemModel item) async {
     var db = await openedDb;
-    return await db.insert('items', item.toMap());
+    return await db.insert(
+      'items',
+      item.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.ignore,
+    );
   }
 
   Future<List<int>> getTopList() async {

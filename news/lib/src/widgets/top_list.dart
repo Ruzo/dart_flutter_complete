@@ -16,15 +16,18 @@ class TopList extends StatelessWidget {
                     return FutureBuilder<ItemModel>(
                         key: Key(snapshot.data[index].toString()),
                         future: bloc.getNewsItem(snapshot.data[index]),
-                        builder: (context, snapshot) {
-                          switch (snapshot.connectionState) {
+                        builder: (context, itemSnapshot) {
+                          switch (itemSnapshot.connectionState) {
                             case ConnectionState.none:
                             case ConnectionState.active:
                             case ConnectionState.waiting:
-                              print('${snapshot.connectionState} for $index');
-                              return Text('Loading...');
+                              print(
+                                  '${itemSnapshot.connectionState} for $index');
+                              return buildItem(
+                                  ItemModel.placeHolder(snapshot.data[index]),
+                                  index);
                             case ConnectionState.done:
-                              return buildItem(snapshot.data, index);
+                              return buildItem(itemSnapshot.data, index);
                           }
                         });
                   },
