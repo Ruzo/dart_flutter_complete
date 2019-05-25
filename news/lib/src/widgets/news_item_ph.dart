@@ -16,36 +16,27 @@ class NewsItemPlaceholder extends StatelessWidget {
         radius: 16,
       ),
       title: Column(
-        // mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Container(
-            color: Colors.blueGrey[100],
-            width: 40.0,
-            height: 20.0,
-          ),
-          Container(
-            color: Colors.blueGrey[100],
-            width: 30.0,
-            height: 20.0,
-          ),
+          greyBox(40, 20),
+          greyBox(30, 20),
         ],
       ),
-      subtitle: Container(
-        color: Colors.blueGrey[100],
-        width: 10.0,
-        height: 20.0,
-      ),
+      subtitle: greyBox(10, 20),
       trailing: Column(
         children: <Widget>[
           Icon(Icons.comment),
-          Container(
-            color: Colors.blueGrey[100],
-            width: 10.0,
-            height: 20.0,
-          ),
+          greyBox(10, 20),
         ],
       ),
+    );
+  }
+
+  Widget greyBox(double width, double height) {
+    return Container(
+      color: Colors.blueGrey[100],
+      width: width,
+      height: height,
     );
   }
 }
