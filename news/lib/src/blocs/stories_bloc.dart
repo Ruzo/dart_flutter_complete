@@ -31,6 +31,7 @@ class StoriesBloc {
   }
 
   resfreshTopList() async {
+    await _repository.refreshTopList();
     return getTopNews();
   }
 

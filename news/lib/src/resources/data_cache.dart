@@ -5,4 +5,5 @@ abstract class DataCache {
   Future<ItemModel> getItem(int id);
   Future<int> insertItem(ItemModel item);
   Future<int> updateTopList(List<int> ids);
+  emptyCache();
 }

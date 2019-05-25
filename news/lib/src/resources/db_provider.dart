@@ -95,4 +95,9 @@ class DbProvider implements DataCache {
     return await db.update('top_ids', {'ids': jsonEncode(ids)},
         where: 'id = ?', whereArgs: [0]);
   }
+
+  emptyCache() async {
+    var db = await openedDb;
+    await db.delete('items');
+  }
 }

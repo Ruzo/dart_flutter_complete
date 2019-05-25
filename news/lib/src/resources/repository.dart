@@ -62,6 +62,9 @@ class Repository {
   }
 
   refreshTopList() {
+    for (DataCache cache in caches) {
+      cache.emptyCache();
+    }
     refresh = true;
   }
 }
