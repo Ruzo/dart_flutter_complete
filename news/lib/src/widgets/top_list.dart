@@ -35,6 +35,7 @@ class TopList extends StatelessWidget {
                               case ConnectionState.done:
                                 return NewsItem(itemSnapshot.data, index);
                             }
+                            return null;
                           });
                     },
                   )
